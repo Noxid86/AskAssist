@@ -5,14 +5,12 @@ let options = {
 };
 
 function appendTool(html){
-    // fetch the plugin HTML from the background script...
-    chrome.runtime.sendMessage({message:{flag:"get", options:[{name:'toolbar', path:"./abccomponents/toolbar.html"}, {name:'options', path:"./components/options.html"}]}}, function(res){
-        //... and append it
-        console.log(res[0]);
-        console.log(res[1]);
-        document.querySelector('.p-ia__view_header__spacer').innerHTML = res[0];
-
-        //... and it's event listeners
+    // fetch the plugin components from the background script...
+    chrome.runtime.sendMessage({message:{flag:"get", options:[{name:'toolbar', path:"./components/toolbar.html"}, {name:'options', path:"./components/options.html"}]}}, function(res){
+        //... and append them
+        document.querySelector('.p-ia__view_header').innerHTML += res.toolbar;
+        document.querySelector('.c-tabs__tab_menu').innerHTML += res.options;
+        //... and their event listeners
         document.querySelector('#start-timer').addEventListener('click', function(){
             start.style.display = 'none';
             stop.style.display = 'inline-block';
@@ -28,14 +26,15 @@ function appendTool(html){
         });
         document.querySelector('#stop-timer').addEventListener('click', function(){
             stop.style.display = 'none';
-            start.style.display = 'inline-block';
+            start.style.display = 'inline';
             clearInterval(timer);   
         });
         document.querySelector('#settings-button').addEventListener('click', function(){
-            if(document.querySelector('#options-container').style.display=="none"){
-                document.querySelector('#options-container').style.display="block"
+            let container = document.querySelector('#options-container');
+            if(container.classList.contains('slideOut')){
+                container.classList.remove('slideOut');
             } else {
-                document.querySelector('#options-container').style.display="none"
+                container.classList.add('slideOut');
             }
         });
         document.querySelectorAll('.ask-option').forEach(function(el){
@@ -46,7 +45,7 @@ function appendTool(html){
         })
         var start = document.querySelector('#start-timer');
         var stop = document.querySelector('#stop-timer');
-        document.querySelector('#options-container').style.display="none"
+        //document.querySelector('#options-container').style.display="none"
     })
 }
 

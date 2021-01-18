@@ -41,7 +41,10 @@ function handleGet(request, sender, sendResponse){
     console.log('fetching files...')
     options.forEach(({path}, i) => {
         files.push(
-            fetch(path).catch(console.log(path, 'notfound'))
+            fetch(path).catch((err)=>{
+                console.log(err);
+                return {err:"not found"}
+            })
         )
         console.log('Files:',files);
     });
@@ -49,12 +52,19 @@ function handleGet(request, sender, sendResponse){
     Promise.all(files).then(function(results){
         console.log('building components...')
         results.forEach(function(file, i){
-            components[i]=file.text();
-            console.log('Components:',components)    
+            if(file['err']){
+                components[i]=file['err'];
+            } else {
+                components[i]=file.text();
+            }
         })
         Promise.all(components).then(function(results){
-            console.log('response', results)
-            sendResponse(results);
+            let response = {}
+            results.forEach((res, i)=>{
+                response[options[i]['name']]=res;
+            })
+            console.log('response', response)
+            sendResponse(response);
         })
     })
 }
