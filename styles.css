@@ -77,6 +77,11 @@
 #options-container>input{
     width: 40px;
 }
+#options-container>p{
+    display: inline;
+    padding: 0;
+    margin: 0;
+}
 
 @keyframes rotation {
     from {

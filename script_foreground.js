@@ -1,31 +1,29 @@
-let config = {
-    speed: 5000,
-    alert: {
-        sound:1,
-        frequency:1
-    }
+let options = {
+    "alert-frequency": 10,
+    "alert-sound": 1,
+    "refresh-frequency": 2
 };
 
 function appendTool(html){
     // fetch the plugin HTML from the background script...
-    chrome.runtime.sendMessage({message:{flag:"get", option:"toolbar.html"}}, function(res){
+    chrome.runtime.sendMessage({message:{flag:"get", options:[{name:'toolbar', path:"./abccomponents/toolbar.html"}, {name:'options', path:"./components/options.html"}]}}, function(res){
         //... and append it
-        document.querySelector('.p-ia__view_header__spacer').innerHTML = res;
+        console.log(res[0]);
+        console.log(res[1]);
+        document.querySelector('.p-ia__view_header__spacer').innerHTML = res[0];
+
         //... and it's event listeners
-        var start = document.querySelector('#start-timer');
-        var stop = document.querySelector('#stop-timer');
         document.querySelector('#start-timer').addEventListener('click', function(){
             start.style.display = 'none';
             stop.style.display = 'inline-block';
-            console.log('clicking Refresh every '+config.speed+' milliseconds');
             timer = setInterval(function(){
                 var refresh_btn = document.querySelectorAll('[data-qa-action-id="refresh-queue"]')[0];
                 if(refresh_btn){refresh_btn.click()};
                 if(newQuestion()){
-                    //chrome.runtime.sendMessage({message:{flag:"alert", option:config.alert}});
-                    config.watch = false;
+                    chrome.runtime.sendMessage({message:{flag:"alert", option:options["alert-sound"]}});
                 };
-            }, config.speed);
+                console.log(options["refresh-frequency"]*1000)
+            }, options["refresh-frequency"]*1000);
             return timer;
         });
         document.querySelector('#stop-timer').addEventListener('click', function(){
@@ -40,6 +38,15 @@ function appendTool(html){
                 document.querySelector('#options-container').style.display="none"
             }
         });
+        document.querySelectorAll('.ask-option').forEach(function(el){
+            el.addEventListener('change', function(e){
+                options[e.target.id]=e.target.value;
+                console.log(options);
+            })
+        })
+        var start = document.querySelector('#start-timer');
+        var stop = document.querySelector('#stop-timer');
+        document.querySelector('#options-container').style.display="none"
     })
 }
 
@@ -50,6 +57,12 @@ function newQuestion(){
     } else {
         return false;
     } 
+}
+
+
+function handleInput(e){
+    console.log("handling input")
+    console.log(e.target.value);
 }
 
 window.addEventListener('load', appendTool);

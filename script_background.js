@@ -7,20 +7,14 @@ let timer = setInterval(()=>{
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse)=>{
     console.log(request);
+
     flag = request.message.flag;
-    console.log(flag)
     switch (flag) {
         case "alert":
             handleAlert(request);
             sendResponse("alerted")
         case "get":
-            const file = chrome.runtime.getURL('./toolbar.html');
-            fetch(file)
-            .then((res) => {
-                return res.text()
-            }).then((html) => {
-                sendResponse(html)
-            })
+            handleGet(request, sender, sendResponse);
     } 
     return true  
 })
@@ -35,7 +29,32 @@ function handleAlert({message}){
     ){alert.play()}   
 }
 
-function handleGet({message}, sendResponse){
-    console.log('handling get');
- 
+function handleGet(request, sender, sendResponse){
+    let options = request.message.options
+    let files = [];
+    let components = [];
+    // Convert Filenames to extension URLs
+    options.forEach(function(u,i){
+        options[i].path = chrome.runtime.getURL(options[i].path)
+    })
+    // Fetch files
+    console.log('fetching files...')
+    options.forEach(({path}, i) => {
+        files.push(
+            fetch(path).catch(console.log(path, 'notfound'))
+        )
+        console.log('Files:',files);
+    });
+    // When all files are fetched, convert them to text
+    Promise.all(files).then(function(results){
+        console.log('building components...')
+        results.forEach(function(file, i){
+            components[i]=file.text();
+            console.log('Components:',components)    
+        })
+        Promise.all(components).then(function(results){
+            console.log('response', results)
+            sendResponse(results);
+        })
+    })
 }
