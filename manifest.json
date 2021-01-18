@@ -1,0 +1,26 @@
+{
+    "name": "AskBCS Assistant",
+    "version": "1.0",
+    "description": "",
+    "icons": { 
+      "16": "./assets/icons/icon16.png",
+      "48": "./assets/icons/icon48.png",
+      "128": "./assets/icons/icon128.png" },
+    "background": {
+      "scripts": ["script_background.js"]
+    },
+    "web_accessible_resources": [
+      "./assets/alert0.mp3",
+      "./assets/alert1.mp3",
+      "./assets/alert2.mp3",
+      "toolbar.html"
+    ],
+    "content_scripts": [
+        {
+          "matches": ["https://app.slack.com/client/TLXH0JYKB/*"],
+          "js": ["script_foreground.js"], 
+          "css": ["styles.css"]
+        }
+      ],
+    "manifest_version": 2
+}

@@ -1,0 +1,23 @@
+
+.cusBut {
+    border-radius: 5px;
+    line-height: 1.6;
+    border: 2px solid #dddddd; 
+    width: 75px;
+    height: 30px;
+    margin: 1rem; 
+    float: right; 
+    text-align: center; 
+    color:white;
+}
+#start-timer {
+    background-color: #91d68b;
+} 
+#stop-timer {
+    background-color: #E70002;
+    display:none;
+} 
+#alert { 
+    display: none; 
+    background-color: #6abdd7;
+}
