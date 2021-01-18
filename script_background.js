@@ -13,7 +13,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse)=>{
         case "alert":
             handleAlert(request);
         case "get":
-            handleGet(request, sendResponse);
+            //handleGet(request, sendResponse);
     }
     sendResponse("This is a mo'fuckin response")
 })
@@ -30,11 +30,5 @@ function handleAlert({message}){
 
 function handleGet({message}, sendResponse){
     console.log('handling get');
-    const file = chrome.runtime.getURL('./toolbar.html');
-    fetch(file)
-    .then((res) => {
-        console.log("RESPIGGITY SPONSE!")
-        console.log(res);
-        sendResponse("biggy");
-    }) //assuming file contains json
+
 }

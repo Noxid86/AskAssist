@@ -7,13 +7,11 @@ let config = {
     watch: true
 }
 
-chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
-    console.log('message recieved','---------');
-    console.log(message, sender, sendResponse);
-});
 
 function appendTool(html){
-    chrome.runtime.sendMessage({message:{flag:"get", option:"toolbar.html"}})
+    chrome.runtime.sendMessage({message:{flag:"get", option:"toolbar.html"}}, function(res){
+        console.log('balls', res )
+    })
 
 
     /* ADD HTML BUTTONS */
@@ -35,7 +33,7 @@ function appendTool(html){
             var refresh_btn = document.querySelectorAll('[data-qa-action-id="refresh-queue"]')[0];
             if(refresh_btn){refresh_btn.click()};
             if(newQuestion()){
-                chrome.runtime.sendMessage({message:{flag:"alert", option:config.alert}});
+                //chrome.runtime.sendMessage({message:{flag:"alert", option:config.alert}});
                 config.watch = false;
             };
         }, config.speed);
@@ -49,7 +47,7 @@ function appendTool(html){
         
     })
    
-    chrome.runtime.sendMessage({message:{flag:"alert", option:config.alert}});
+    //chrome.runtime.sendMessage({message:{flag:"alert", option:config.alert}});
 }
 
 function newQuestion(){
