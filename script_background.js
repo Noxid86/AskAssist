@@ -12,10 +12,17 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse)=>{
     switch (flag) {
         case "alert":
             handleAlert(request);
+            sendResponse("alerted")
         case "get":
-            //handleGet(request, sendResponse);
-    }
-    sendResponse("This is a mo'fuckin response")
+            const file = chrome.runtime.getURL('./toolbar.html');
+            fetch(file)
+            .then((res) => {
+                return res.text()
+            }).then((html) => {
+                sendResponse(html)
+            })
+    } 
+    return true  
 })
 
 function handleAlert({message}){
@@ -30,5 +37,5 @@ function handleAlert({message}){
 
 function handleGet({message}, sendResponse){
     console.log('handling get');
-
+ 
 }

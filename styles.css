@@ -1,23 +1,88 @@
+#askAssist {
+    padding: 1rem;
+    height: 100px;
+    width: 60%;
+    margin-right: 2rem;
+    float: right;
+}
 
 .cusBut {
-    border-radius: 5px;
+    border-radius: 3px;
     line-height: 1.6;
-    border: 2px solid #dddddd; 
-    width: 75px;
+    border: 1px solid #dddddd; 
+    min-width: 75px;
     height: 30px;
-    margin: 1rem; 
     float: right; 
     text-align: center; 
     color:white;
+    padding: 0 8px 1px;
 }
 #start-timer {
-    background-color: #91d68b;
+    border: 1px solid rgba(0,122,90, .3);
+    color: #007a5a;
+    font-weight: 700;
+    font-size: 15px;
+
+} 
+#start-timer:hover {
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.08);
+    background: rgba(var(--sk_foreground_min,29,28,29),.04);
 } 
 #stop-timer {
-    background-color: #E70002;
-    display:none;
+    display: none;
+    border: 1px solid rgba(226, 2, 2, 0.3);
+    color:  #E70002;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
 } 
-#alert { 
-    display: none; 
-    background-color: #6abdd7;
+#stop-timer:hover {
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.08);
+    background: rgba(var(--sk_foreground_min,29,28,29),.04);
+} 
+#settings-button{
+    color:rgba(0,122,90, .3);
+    float: right;
+    font-size: 3rem;
+    margin:0;
+    padding:0;
+    height: 30px;
+    line-height: 0.5;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    cursor: pointer;
 }
+#settings-button:hover{
+    color:rgba(0,122,90, .9);
+    animation: rotation 10s infinite linear;
+}
+#options-container{
+    display:none;
+    margin-top: -4px;
+    float: right;
+    max-width: 600px;
+    background-color: rgba(0,122,90, .05);
+    padding: 0.5rem;
+}
+#options-container>*{
+    color:rgba(0,122,90);
+    border-color: rgba(0,122,90);
+}
+#options-container>input,select{
+    border-radius: 3px;
+    border-width: 1px;
+    max-width: 80px;
+    border-style: solid;
+}
+#options-container>input{
+    width: 40px;
+}
+
+@keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
+  }
