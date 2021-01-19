@@ -8,8 +8,7 @@ function appendTool(html){
     // fetch the plugin components from the background script...
     chrome.runtime.sendMessage({message:{flag:"get", options:[{name:'toolbar', path:"./components/toolbar.html"}, {name:'options', path:"./components/options.html"}]}}, function(res){
         //... and append them
-        document.querySelector('.p-ia__view_header').innerHTML += res.toolbar;
-        document.querySelector('.c-tabs__tab_menu').innerHTML += res.options;
+        document.querySelector('.p-workspace__primary_view_contents').innerHTML=res.toolbar+document.querySelector('.p-workspace__primary_view_contents').innerHTML;
         //... and their event listeners
         document.querySelector('#start-timer').addEventListener('click', function(){
             start.style.display = 'none';
@@ -45,7 +44,6 @@ function appendTool(html){
         })
         var start = document.querySelector('#start-timer');
         var stop = document.querySelector('#stop-timer');
-        //document.querySelector('#options-container').style.display="none"
     })
 }
 
@@ -58,10 +56,5 @@ function newQuestion(){
     } 
 }
 
-
-function handleInput(e){
-    console.log("handling input")
-    console.log(e.target.value);
-}
 
 window.addEventListener('load', appendTool);
