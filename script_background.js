@@ -7,26 +7,50 @@ let timer = setInterval(()=>{
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse)=>{
     console.log(request);
-
     flag = request.message.flag;
     switch (flag) {
         case "alert":
+            console.log('alert request')
             handleAlert(request);
             sendResponse("alerted")
+            break;
         case "get":
+            console.log('get request')
             handleGet(request, sender, sendResponse);
+            break;
+        default:
+            break;
     } 
     return true  
 })
 
 function handleAlert({message}){
-    console.log('handling alert')
-    alert = new Audio(chrome.runtime.getURL(`./assets/sounds/alert${message.option.sound}.mp3`));
+    let frequency = parseInt(message.options['alert-frequency']);
+    let alertInterval = 60/parseInt(message.options['alert-frequency']);
+    console.log("FR:", frequency, "IN", alertInterval, "::",time)
+    console.log((message.options['alert-frequency'] != 0), (time> alertInterval))
     if(
-        alert && 
-        message.option.frequency > 0 && 
-        time>message.option.frequency
-    ){alert.play()}   
+        message.options['alert-frequency'] != 0 && 
+        time < alertInterval
+    ){
+        console.log('aborting alert')
+        return
+    }
+    console.log('handling alert')
+    let alertFile = "";
+    let alerts = message.options["possible-alerts"];
+    console.log(alerts[0], alerts[1]);
+    alerts.forEach(function(alert){
+        console.log(alert.name, message.options["sound-select"]);
+        if (alert.name==message.options["sound-select"]){
+            alertFile = alert.file;
+        }
+    })
+    console.log(alertFile);
+    alert = new Audio(chrome.runtime.getURL(`./assets/sounds/${alertFile}.mp3`));
+    console.log(time, alertInterval);
+    alert.play() 
+    time = 0;
 }
 
 function handleGet(request, sender, sendResponse){

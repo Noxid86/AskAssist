@@ -1,95 +1,63 @@
 #toolbar { 
-    margin: 0.5rem 1rem;
+    padding: 1rem;
     display: inline-block;
-    padding-top: 1rem;
-    padding-right: 35px;
+    padding-right: 25px;
     width: 100%;
-    height: 100px;
-    margin-right: -15px;
+    height: 60px;
     border-bottom: 1px solid #dddddd;
 }
 #toolbar>h1{
-    float:left;
-} 
+    display: inline;
+    float: left;
+}
 #toolbar>h1>span{
     color:#5FB4D8;
     font-style: italic;
     font-weight: bold;
 }
-#toolbar>div{
-    float: right;
+
+[contenteditable="true"]{
+    display: inline-block;
+    min-width:10px;
+    height: 32.5px;
 }
-#toolbar>div>p{
+#alert-sounds>*{
+    display:none;
+}
+#alert-sounds>*:first-child{
+    display:inline-block;
+}
+#waiting{
+    color: coral;
+}
+
+#watching-branch{
+    display: none;
+}
+.ask-opt{
+    padding:0px;
+    margin:0px;
+    color: #5FB4D8;
+    height: 25px;
+}
+#two {
+    display: none;
+}
+.option-sentence{
     line-height: 2;
+    height:25px;
     font-style: italic;
     display: inline;
     font-size:1.2rem;
-    margin: 0px;
-    padding: 0px;
-}
-#toolbar>div>p>span{
-    color: #5FB4D8;
     font-weight: bold;
-    border-bottom:3px solid #5FB4D8;
-}
-#toolbar>div>input,select{
-    display:inline;
+    max-width: 900px;
     margin: 0px;
     padding: 0px;
-    border:none;
-    max-width: ;
-    border-bottom:1px dotted #dddddd;
+    float: right;
 }
-#toolbar>div>div{
-    background-color: #5FB4D8;
-    height: 100%;
-    width: 50px;
+.option-sentence>span{
+    height:25px;
 }
 
-#waiting{
-    display: none;
-}
 
-.divider {
-    display: inline;
-    margin-left: 1rem;
-    margin-right: 1rem;
-}
-.cusBut {
-    display: inline-block;
-    border-radius: 3px;
-    background-color: white;
-    line-height: 1.6;
-    border: 1px solid #dddddd; 
-    width: 130px;
-    height: 35px;
-    text-align: center; 
-    color:white;
-    padding:0.5rem;
-    padding-top:0.25rem;
-    margin:0px;
-}
-#watching {
-    border: 1px solid #93d68b71;;
-    color:#92D68B;;
-    font-weight: 700;
-    font-size: 15px;
-    display: inline;
-} 
-#watching:hover {
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,.08);
-    background: rgba(var(--sk_foreground_min,29,28,29),.04);
-} 
-#waiting {
-    display: none;
-    border: 1px solid rgba(226, 2, 2, 0.3);
-    color:  #E70002;
-    font-weight: 700;
-    font-size: 15px;
-    cursor: pointer;
-} 
-#waiting:hover {
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,.08);
-    background: rgba(var(--sk_foreground_min,29,28,29),.04);
-} 
 
