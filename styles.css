@@ -28,17 +28,25 @@
     display:inline-block;
 }
 #waiting{
-    color: coral;
+    cursor: pointer;
+    color: #DC5960;
+}
+#waiting:hover{
+    color: #dc596093;
 }
 
 #watching-branch{
     display: none;
 }
 .ask-opt{
+    cursor: pointer;
     padding:0px;
     margin:0px;
     color: #5FB4D8;
     height: 25px;
+}
+.ask-opt:hover{
+    color: #5fb4d871;
 }
 #two {
     display: none;

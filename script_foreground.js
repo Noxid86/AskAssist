@@ -3,7 +3,7 @@ let options = {
     "sound-select":"rick roll",
     "watch-time": 4,
     "possible-alerts": [
-        {name:"rick roll", file:'alert2'},
+        {name:"rick roll", file:'rick'},
         {name:"soft beep", file:'alert1'}
     ]
 };
@@ -79,10 +79,9 @@ function appendTool(html){
             el.addEventListener("input", handleChange);
             // prevent return and overspacing on contenteditable features
             el.addEventListener("keypress", function(e){ 
-                if (e.target.innerHTML.length>2){
+                if (e.target.innerHTML.length>2 || isNaN(String.fromCharCode(e.which)) || e.which==13){
                     e.preventDefault();
                 };
-                if (isNaN(String.fromCharCode(e.which))) e.preventDefault();
             });
         });
     });
