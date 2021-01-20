@@ -4,7 +4,8 @@ let options = {
     "watch-time": 4,
     "possible-alerts": [
         {name:"rick roll", file:'rick'},
-        {name:"soft beep", file:'alert1'}
+        {name:"softly beep", file:'beep'},
+        {name:"gently chirp", file:'chirp'}
     ]
 };
 function saveOptions(){
