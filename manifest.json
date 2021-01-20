@@ -1,5 +1,5 @@
 {
-    "name": "AskBCS Assistant",
+    "name": "AskAssist",
     "version": "1.0",
     "description": "",
     "icons": { 
@@ -10,9 +10,9 @@
       "scripts": ["script_background.js"]
     },
     "web_accessible_resources": [
-      "./assets/alert0.mp3",
-      "./assets/alert1.mp3",
-      "./assets/alert2.mp3",
+      "./assets/beep.mp3",
+      "./assets/chirp.mp3",
+      "./assets/rick.mp3",
       "toolbar.html"
     ],
     "content_scripts": [

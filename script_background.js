@@ -1,8 +1,9 @@
 // ALERT TIMER
 // time between alerts is controlled by config.alert.frequency
-let time=0;
+let started = false;
+let time=1000;
 let timer = setInterval(()=>{
-    time++
+    if(started){time++}
 },1000);
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse)=>{
@@ -11,7 +12,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse)=>{
     switch (flag) {
         case "alert":
             console.log('alert request')
-            handleAlert(request);
+            alert_manager.handleAlert(request.message.options);
             sendResponse("alerted")
             break;
         case "get":
@@ -24,34 +25,50 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse)=>{
     return true  
 })
 
-function handleAlert({message}){
-    let frequency = parseInt(message.options['alert-frequency']);
-    let alertInterval = 60/parseInt(message.options['alert-frequency']);
-    console.log("FR:", frequency, "IN", alertInterval, "::",time)
-    console.log((message.options['alert-frequency'] != 0), (time> alertInterval))
-    if(
-        message.options['alert-frequency'] != 0 && 
-        time < alertInterval
-    ){
-        console.log('aborting alert')
-        return
-    }
-    console.log('handling alert')
-    let alertFile = "";
-    let alerts = message.options["possible-alerts"];
-    console.log(alerts[0], alerts[1]);
-    alerts.forEach(function(alert){
-        console.log(alert.name, message.options["sound-select"]);
-        if (alert.name==message.options["sound-select"]){
-            alertFile = alert.file;
+let alert_manager = {
+    alertList: [
+        {name:"rick roll", file:'rick'},
+        {name:"beep beep", file:'beep'},
+        {name:"softly chirp", file:'chirp'}
+    ],
+    handleAlert: (options)=>{
+        // TERMS:
+        // alert-frequency: the number in times per minute given per the user that the alert should maximally go off.
+        // alert-interval: the number of seconds that must have passed since the last alert to statisfy the alert-frequency
+        let frequency = parseInt(options['alert-frequency']);
+        let alertInterval = 60/frequency
+        // ensure that the user has not turned off alerts, nor is it too soon, given the current frequency,  to issue another alert
+        if(
+            options['alert-frequency'] != 0 && 
+            time < alertInterval
+        ){
+            console.log('aborting alert')
+            return false
         }
-    })
-    console.log(alertFile);
-    alert = new Audio(chrome.runtime.getURL(`./assets/sounds/${alertFile}.mp3`));
-    console.log(time, alertInterval);
-    alert.play() 
-    time = 0;
+        // load the sound file and issue the alert
+        let alertFile;
+        alert_manager.alertList.forEach(function(alert){
+            if (alert.name==options["sound-select"]){
+                alertFile = alert.file;
+            }
+        })
+        if(!alertFile){
+            console.log(options["sound-select"], "does not have an associated sound file");
+            return false
+        }
+        alert = new Audio(chrome.runtime.getURL(`./assets/sounds/${alertFile}.mp3`));
+        console.log('playing alert', )
+        alert.play() 
+        started = true;
+        time = 0;
+    }
 }
+
+// HANDLE GET REQUESTS FROM THE FRONT END
+/* Unneccessary Functionality - handleGet was designed 
+   to be able to fetch many different components for 
+   the front end.  I have since redesigned the plugin 
+   to use a single component.*/
 
 function handleGet(request, sender, sendResponse){
     let options = request.message.options

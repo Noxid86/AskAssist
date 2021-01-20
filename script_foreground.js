@@ -1,25 +1,36 @@
-let options = {
-    "alert-frequency":5,
+let config = config_default = {
+    "alert-frequency":1,
     "sound-select":"rick roll",
     "watch-time": 4,
-    "possible-alerts": [
-        {name:"rick roll", file:'rick'},
-        {name:"softly beep", file:'beep'},
-        {name:"gently chirp", file:'chirp'}
-    ]
 };
-function saveOptions(){
+function loadConfig(){
+    if(JSON.parse(localStorage.getItem('config'))){config=JSON.parse(localStorage.getItem('config'))}
     document.querySelectorAll('[isOption="true"]').forEach(function(el){
-        options[el.id]=el.innerHTML;
+        el.innerHTML=config[el.id]
+    })
+    document.querySelectorAll('#alert-sounds>*').forEach(function(el){
+        console.log(el.innerHTML, config["sound-select"])
+        if(el.innerHTML==config["sound-select"]){
+            el.style.display = "inline"
+        } else {
+            el.style.display = "none"
+        }
+    })  
+}
+
+function saveConfig(){
+    document.querySelectorAll('[isOption="true"]').forEach(function(el){
+        config[el.id]=el.innerHTML;
     })
     let soundSelect = "";
     document.querySelectorAll('#alert-sounds>*').forEach(function(el){
         if(el.style.display!="none"){
-            soundSelect = (soundSelect) ? "error:multiple chosen" : el.innerHTML;
+            soundSelect = el.innerHTML;
         }
     })
-    options["sound-select"]=soundSelect;
-    console.log(options);
+    config["sound-select"]=soundSelect;
+    localStorage.setItem('config', JSON.stringify(config))
+    console.log('saved config:',config);
 }
 
 function appendTool(html){
@@ -36,6 +47,7 @@ function appendTool(html){
         toolbar.innerHTML=res.toolbar;
         let workspace = document.querySelector('.p-workspace__primary_view_contents');
         workspace.prepend(toolbar);
+        loadConfig();
         //... and their event listeners
         let waiting = document.querySelector('#waiting');
         let watching = document.querySelector('#watching');
@@ -49,11 +61,11 @@ function appendTool(html){
                 var refresh_btn = document.querySelector('[data-qa-action-id="refresh-queue"]');
                 refresh_btn.click();
                 if(newQuestion()){
-                    let message = {message:{flag:"alert", options:options}};
+                    let message = {message:{flag:"alert", options:config}};
                     console.log('New Question Detected - sending alert to background', message);
                     chrome.runtime.sendMessage(message);
                 };
-            }, options["watch-time"]*1000);
+            }, config["watch-time"]*1000);
             return timer;
         });
         watching.addEventListener('click', function(){
@@ -68,13 +80,14 @@ function appendTool(html){
                     el.style.display = 'none';
                 })
                 document.querySelector('#'+next).style.display = 'inline';
-                options["alert-sound"]=document.querySelector('#'+next).innerHTML;
+                config["alert-sound"]=document.querySelector('#'+next).innerHTML;
+                saveConfig();
             })
         })
         document.querySelectorAll("[contenteditable='true']").forEach(function(el){
             // approximate on('change') which does not appear to work
             function handleChange(e){
-                saveOptions();
+                saveConfig();
             }
             el.addEventListener("blur", handleChange);
             el.addEventListener("input", handleChange);
@@ -94,7 +107,7 @@ function newQuestion(){
     if(search!==-1){
         return true;
     } else {
-        return false;
+        return false
     } 
 }
 

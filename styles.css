@@ -1,3 +1,6 @@
+[contenteditable] {
+    outline: 0px solid transparent;
+}
 #toolbar { 
     padding: 1rem;
     display: inline-block;
@@ -52,11 +55,11 @@
     display: none;
 }
 .option-sentence{
-    line-height: 2;
+    line-height: 2.6;
     height:25px;
     font-style: italic;
     display: inline;
-    font-size:1.2rem;
+    font-size:1rem;
     font-weight: bold;
     max-width: 900px;
     margin: 0px;
