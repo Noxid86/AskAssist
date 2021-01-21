@@ -1,39 +1,78 @@
-let config = config_default = {
+let state = {
     "alert-frequency":1,
     "sound-select":"rick roll",
-    "watch-time": 4,
-};
-function loadConfig(){
-    if(JSON.parse(localStorage.getItem('config'))){config=JSON.parse(localStorage.getItem('config'))}
-    document.querySelectorAll('[isOption="true"]').forEach(function(el){
-        el.innerHTML=config[el.id]
-    })
-    document.querySelectorAll('#alert-sounds>*').forEach(function(el){
-        console.log(el.innerHTML, config["sound-select"])
-        if(el.innerHTML==config["sound-select"]){
-            el.style.display = "inline"
-        } else {
-            el.style.display = "none"
+    "watch-frequency": 5,
+
+    loadState: function(){
+        if(JSON.parse(localStorage.getItem('config'))){
+            saveData=JSON.parse(localStorage.getItem('config'))
+            state["sound-select"] = saveData["sound-select"] || "rick roll"
+            state["alert-frequency"] = saveData["alert-frequency"] || "1"
+            state["watch-frequency"] = saveData["watch-frequency"] || "5"
+        } 
+    },
+    set:function(property, value){
+        console.log('state setting ', property, ' to ', value)
+        if(state[property]){
+            state[property] = value;
+            let saveData = {
+                "alert-frequency":state["alert-frequency"],
+                "sound-select":state["sound-select"],
+                "watch-frequency": state["watch-frequency"]
+            }
+            localStorage.setItem('config',JSON.stringify(daveData))
+        } 
+        else { console.log (`error: ${property} is not a known configuration property`)}
+    },
+    // renderConfig: function(){
+    //     document.querySelectorAll('[isoption]').forEach(function(el){
+    //         optionType = el.getAttribute('isoption')
+    //         if(optionType=="alertToggle"){
+
+    //         } else if(optionType=="fillable") {
+
+    //         }
+    //     })
+
+    //     document.querySelectorAll('#alert-sounds>*').forEach(function(el){
+    //         console.log(el.innerHTML, config["sound-select"])
+    //         if(el.innerHTML==config["sound-select"]){
+    //             el.style.display = "inline"
+    //         } else {
+    //             el.style.display = "none"
+    //         }
+    //     }) 
+    // },
+    render : {
+        fields: function(){
+            document.querySelectorAll("[isOption]").forEach(function(el){
+                // approximate on('change') which does not appear to work
+                function handleChange(e){
+                    state.set(e.target.id, e.target.innerHTML)
+                }
+                el.addEventListener("blur", handleChange);
+                el.addEventListener("input", handleChange);
+                // prevent return and overspacing on contenteditable features
+                el.addEventListener("keypress", function(e){ 
+                    if (e.target.innerHTML.length>2 || isNaN(String.fromCharCode(e.which)) || e.which==13){
+                        e.preventDefault();
+                    };
+                });
+            });
+        },
+        soundToggle: function(){
+    
         }
-    })  
+    }
 }
 
-function saveConfig(){
-    document.querySelectorAll('[isOption="true"]').forEach(function(el){
-        config[el.id]=el.innerHTML;
-    })
-    let soundSelect = "";
-    document.querySelectorAll('#alert-sounds>*').forEach(function(el){
-        if(el.style.display!="none"){
-            soundSelect = el.innerHTML;
-        }
-    })
-    config["sound-select"]=soundSelect;
-    localStorage.setItem('config', JSON.stringify(config))
-    console.log('saved config:',config);
-}
+
+
+
+
 
 function appendTool(html){
+    state.set('alert-frequency', 99);
     // fetch the plugin components from the background script...
     chrome.runtime.sendMessage(
         {message:
@@ -47,7 +86,7 @@ function appendTool(html){
         toolbar.innerHTML=res.toolbar;
         let workspace = document.querySelector('.p-workspace__primary_view_contents');
         workspace.prepend(toolbar);
-        loadConfig();
+        loadState();
         //... and their event listeners
         let waiting = document.querySelector('#waiting');
         let watching = document.querySelector('#watching');
@@ -61,11 +100,11 @@ function appendTool(html){
                 var refresh_btn = document.querySelector('[data-qa-action-id="refresh-queue"]');
                 refresh_btn.click();
                 if(newQuestion()){
-                    let message = {message:{flag:"alert", options:config}};
+                    let message = {message:{flag:"alert", options:{frequency:state["alert-frequency"], sound: state["sound-select"]}}};
                     console.log('New Question Detected - sending alert to background', message);
                     chrome.runtime.sendMessage(message);
                 };
-            }, config["watch-time"]*1000);
+            }, state["watch-frequency"]*1000);
             return timer;
         });
         watching.addEventListener('click', function(){
@@ -80,11 +119,11 @@ function appendTool(html){
                     el.style.display = 'none';
                 })
                 document.querySelector('#'+next).style.display = 'inline';
-                config["alert-sound"]=document.querySelector('#'+next).innerHTML;
+                state["alert-sound"]=document.querySelector('#'+next).innerHTML;
                 saveConfig();
             })
         })
-        document.querySelectorAll("[contenteditable='true']").forEach(function(el){
+        document.querySelectorAll("[optField='true']").forEach(function(el){
             // approximate on('change') which does not appear to work
             function handleChange(e){
                 saveConfig();
