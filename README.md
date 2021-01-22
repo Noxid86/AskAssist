@@ -4,7 +4,7 @@
 AskAssist is a small chrome plugin to complement the AskBCS slack application
 and comes with the following features...
 
-**Automated Refresh:** The user may define a number of seconds to wait between refreshes.  When the elapsed time has completed the plugin will simulate the clicking of the refresh button with the AskBCS Application.
+**Automated Refresh:** The user may define a number of seconds to wait between refreshes.  When the elapsed time has completed the plugin will simulate the clicking of the refresh button within the AskBCS Application.
 
 **Sound Alerts:**  Whenever a new question is available ( tested by the presence of 'available questions' in the html ), AskAssist will play an alert sound. The user can toggle between several sound options as well as set the volume and frequency of the alert.  
  
