@@ -17,7 +17,7 @@ This is an unpacked work in progress.  To install the plugin enable developer mo
 When the user opens the page the automated refresh will be turned off. Clicking the word "waiting" on the right will begin the script and reveal the options.
 
 ![screenshot 'watching'](./screenshot-watching.png)
-When the script is running it's refresh the following options may be adjusted...
+When the script is running its refresh the following options may be adjusted...
 
 **Clickables...**
 watching: toggles the script back off.
