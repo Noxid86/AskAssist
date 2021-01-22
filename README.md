@@ -1,4 +1,5 @@
 ![AskAssist](./screenshot-AskAssist.png)
+
 ---
 AskAssist is a small chrome plugin to complement the AskBCS slack application
 and comes with the following features...
