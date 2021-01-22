@@ -3,7 +3,6 @@ let state = {
     "sound-select":"rick roll",
     "watch-frequency": 5,
     alertList: [],
-    
     loadState: function(){
         if(JSON.parse(localStorage.getItem('config'))){
             saveData=JSON.parse(localStorage.getItem('config'))
@@ -12,8 +11,8 @@ let state = {
             state["alert-frequency"] = saveData["alert-frequency"] || "1"
             state["watch-frequency"] = saveData["watch-frequency"] || "5"
         } 
+        this.render["sound-select"]();
         this.render.fields();
-        this.render.soundToggle;
     },
     
     set: function(property, value){
@@ -28,7 +27,8 @@ let state = {
             }
             console.log('saving settings ', saveData)
             localStorage.setItem('config',JSON.stringify(saveData))
-            state.render[property];
+            console.log(`attempting to render ${property}`)
+            if(property=="sound-select"){state.render["sound-select"]()};
         } 
         else { 
             console.log (`error: ${property} is not a known configuration property`)
@@ -39,7 +39,7 @@ let state = {
     render : {
         fields: function(){
             console.log('rendering editable fields');
-            document.querySelectorAll("[isOption]").forEach(function(el){
+            document.querySelectorAll("[isoption]").forEach(function(el){
                 console.log('setting ', el);
                 el.innerHTML = state[el.id];
                 // approximate on('change') which does not appear to work
@@ -57,19 +57,49 @@ let state = {
                 });
             });
         },
-        soundToggle: function(){
-            console.log('render sound toggle WIP');
-
+        "alert-frequency": function(){this.fields()},
+        "watch-frequency": function(){this.fields()},
+        "sound-select": function(){
+            console.log('rendering sound toggle')
+            let alertContainer = document.querySelector('#alert-sounds');
+            alertContainer.innerHTML = '';
+            state.alertList.forEach(function({name}){
+                console.log(`adding ${name} to soundToggle`)
+                let alertEl = document.createElement('span')
+                let alertState = (name==state["sound-select"]) ? "displayed-alert" : "hidden-alert";
+                alertEl.innerHTML = name;
+                alertEl.classList.add('ask-opt', alertState);
+                alertEl.addEventListener('click', function(e){
+                    let curAlert = e.target.innerHTML;
+                    state.alertList.forEach(function(alert, i){
+                        console.log(`(${alert.name} == ${curAlert}) : ${( alert.name == curAlert)}`);
+                        if( alert.name == curAlert){
+                            console.log(`i ${i} >= list length ${state.alertList.length} is ${i+1>=state.alertList.length}`)
+                            if( i+1>=state.alertList.length ){
+                                console.log("alert to 0")
+                                state.set('sound-select', state.alertList[0].name)
+                            } else {
+                                console.log("alert to", i+2)
+                                state.set('sound-select', state.alertList[i+1].name)
+                            }   
+                        }
+                    })
+                })
+                alertContainer.append(alertEl);
+            })    
         }
     }
 }
 
-
-
-
-
-
 function appendTool(html){
+    // fetch the list of possible alerts from the background script
+    chrome.runtime.sendMessage(
+        {message:
+            {flag:"alertList"}
+        }, function(res){
+            state.alertList = res;
+            console.log('alert list fetched from background');
+    })
     // fetch the plugin components from the background script...
     chrome.runtime.sendMessage(
         {message:
@@ -107,10 +137,10 @@ function appendTool(html){
             watchBrach.style.display = "none";
             clearInterval(timer);   
         });
-        document.querySelectorAll("[optField='true']").forEach(function(el){
+        document.querySelectorAll("[isoption]").forEach(function(el){
             // approximate on('change') which does not appear to work
             function handleChange(e){
-                saveConfig();
+                state.set(e.target.id, e.target.innerHTML)
             }
             el.addEventListener("blur", handleChange);
             el.addEventListener("input", handleChange);

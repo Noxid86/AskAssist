@@ -24,12 +24,6 @@
     min-width:10px;
     height: 32.5px;
 }
-#alert-sounds>*{
-    display:none;
-}
-#alert-sounds>*:first-child{
-    display:inline-block;
-}
 #waiting{
     cursor: pointer;
     color: #DC5960;
@@ -68,6 +62,13 @@
 }
 .option-sentence>span{
     height:25px;
+}
+
+.displayed-alert{
+    display: inline-block;
+} 
+.hidden-alert{
+    display: none;
 }
 
 

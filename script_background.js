@@ -10,6 +10,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse)=>{
     console.log(request);
     flag = request.message.flag;
     switch (flag) {
+        case "alertList":
+            sendResponse(alert_manager.alertList)
+            break;
         case "alert":
             console.log('alert request')
             alert_manager.handleAlert(request.message.options);
