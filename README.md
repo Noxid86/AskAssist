@@ -1,10 +1,10 @@
 ![AskAssist](./screenshot-AskAssist.png)
 A small chrome plugin to complement the AskBCS slack application
----
-# Installation
+
+## Installation
 This is an unpacked work in progress.  To install the plugin enable developer mode in the upper right hand corner of `chrome://extensions` and then 'load unpacked' on the left. Once you have selected the AskAssist folder the plugin will be ready to use. 
----
-# Usage
+
+## Usage
 AskAssist has the following features...
 
 **Automated Refresh:** The user may define a number of seconds to wait between refreshes.  When the elapsed time has completed the plugin will simulate the clicking of the refresh button with the AskBCS Application.
@@ -29,6 +29,6 @@ alert frequency: the maximum number of times per minute an alert will play.
 
 
 ---
-**Troubleshooting**
+## Troubleshooting
 Failure to append toolbar:  The plugin waits for the user to visit a "https://app.slack.com/client/TLXH0JYKB/*" url and then appends the toolbar to the page.  On occasion the AskBCS application continues to load after the window's 'load' event has fired and the toolbar may fail to append.  If this happens a simple refresh should fix the issue. 
 
