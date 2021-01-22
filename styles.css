@@ -10,14 +10,16 @@
     float: left;
     border-radius: 5px;
 }
-#volume>div {
+#volume div{
+    width: 40px;
+    background-color:transparent;
     border-radius: 15px;
-    width: 3px;
-    position: absolute;
+    border-left: 3px solid #5FB4D8;
     display: inline;
     float: left;
-    background-color: #5FB4D8;
+    position: absolute;
 }
+
 #volume div:first-child{
     bottom: 40%;
     left: 5px;
