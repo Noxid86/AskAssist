@@ -201,7 +201,7 @@ function newQuestion(){
     if(search!==-1){
         return true;
     } else {
-        return true
+        return false
     } 
 }
 
