@@ -2,8 +2,9 @@
     outline: 0px solid transparent;
 }
 #volume {
-    margin-left: 1rem;
     position: relative;
+    top: 4px;
+    margin-left: 1rem;
     height: 25px;
     width: 50px;
     float: left;

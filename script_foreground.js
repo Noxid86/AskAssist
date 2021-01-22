@@ -31,7 +31,10 @@ let state = {
             }
             console.log('saving settings ', saveData)
             localStorage.setItem('config',JSON.stringify(saveData))
-            if(property=="sound-select"){state.render["sound-select"]()};
+            if(property=="sound-select"){
+                state.render["sound-select"]();
+                sendAlert("skip frequency");
+            };
             if(property=="volume"){state.render["volume"]()};
         } 
         else { 
@@ -107,6 +110,22 @@ let state = {
     }
 }
 
+function sendAlert(skipFrequency){
+    let message = {
+        message:{
+        flag:"alert", options:{
+            frequency:state["alert-frequency"], 
+            sound: state["sound-select"], 
+            volume: state["volume"]
+        }
+    }};
+    if(skipFrequency){
+        message.message.options.frequency = 1000;
+    }
+    console.log(`requesting alert ${message}`)
+    chrome.runtime.sendMessage(message);
+}
+
 function appendTool(html){
     // fetch the list of possible alerts from the background script
     chrome.runtime.sendMessage(
@@ -142,16 +161,7 @@ function appendTool(html){
             timer = setInterval(function(){
                 var refresh_btn = document.querySelector('[data-qa-action-id="refresh-queue"]');
                 if(newQuestion()){
-                    let message = {
-                        message:{
-                        flag:"alert", options:{
-                            frequency:state["alert-frequency"], 
-                            sound: state["sound-select"], 
-                            volume: state["volume"]
-                        }
-                    }};
-                    console.log('New Question Detected - sending alert to background', message);
-                    chrome.runtime.sendMessage(message);
+                    sendAlert();
                 };
             }, state["watch-frequency"]*1000);
             return timer;
