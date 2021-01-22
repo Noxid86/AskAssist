@@ -2,52 +2,49 @@ let state = {
     "alert-frequency":1,
     "sound-select":"rick roll",
     "watch-frequency": 5,
-
+    alertList: [],
+    
     loadState: function(){
         if(JSON.parse(localStorage.getItem('config'))){
             saveData=JSON.parse(localStorage.getItem('config'))
+            console.log('loading::: ', saveData);
             state["sound-select"] = saveData["sound-select"] || "rick roll"
             state["alert-frequency"] = saveData["alert-frequency"] || "1"
             state["watch-frequency"] = saveData["watch-frequency"] || "5"
         } 
+        this.render.fields();
+        this.render.soundToggle;
     },
-    set:function(property, value){
-        console.log('state setting ', property, ' to ', value)
-        if(state[property]){
+    
+    set: function(property, value){
+        if(property in state){
+            console.log('state setting ', property, ' to ', value)
             state[property] = value;
+            console.log("::",state["alert-frequency"])
             let saveData = {
                 "alert-frequency":state["alert-frequency"],
                 "sound-select":state["sound-select"],
                 "watch-frequency": state["watch-frequency"]
             }
-            localStorage.setItem('config',JSON.stringify(daveData))
+            console.log('saving settings ', saveData)
+            localStorage.setItem('config',JSON.stringify(saveData))
+            state.render[property];
         } 
-        else { console.log (`error: ${property} is not a known configuration property`)}
+        else { 
+            console.log (`error: ${property} is not a known configuration property`)
+            console.log(state);
+        }
     },
-    // renderConfig: function(){
-    //     document.querySelectorAll('[isoption]').forEach(function(el){
-    //         optionType = el.getAttribute('isoption')
-    //         if(optionType=="alertToggle"){
 
-    //         } else if(optionType=="fillable") {
-
-    //         }
-    //     })
-
-    //     document.querySelectorAll('#alert-sounds>*').forEach(function(el){
-    //         console.log(el.innerHTML, config["sound-select"])
-    //         if(el.innerHTML==config["sound-select"]){
-    //             el.style.display = "inline"
-    //         } else {
-    //             el.style.display = "none"
-    //         }
-    //     }) 
-    // },
     render : {
         fields: function(){
+            console.log('rendering editable fields');
             document.querySelectorAll("[isOption]").forEach(function(el){
+                console.log('setting ', el);
+                el.innerHTML = state[el.id];
                 // approximate on('change') which does not appear to work
                 function handleChange(e){
+                    console.log(e.target.id, "changed")
                     state.set(e.target.id, e.target.innerHTML)
                 }
                 el.addEventListener("blur", handleChange);
@@ -61,7 +58,8 @@ let state = {
             });
         },
         soundToggle: function(){
-    
+            console.log('render sound toggle WIP');
+
         }
     }
 }
@@ -72,7 +70,6 @@ let state = {
 
 
 function appendTool(html){
-    state.set('alert-frequency', 99);
     // fetch the plugin components from the background script...
     chrome.runtime.sendMessage(
         {message:
@@ -86,19 +83,17 @@ function appendTool(html){
         toolbar.innerHTML=res.toolbar;
         let workspace = document.querySelector('.p-workspace__primary_view_contents');
         workspace.prepend(toolbar);
-        loadState();
+        state.loadState();
         //... and their event listeners
         let waiting = document.querySelector('#waiting');
         let watching = document.querySelector('#watching');
         let waitBrach = document.querySelector('#waiting-branch');
         let watchBrach = document.querySelector('#watching-branch');
         waiting.addEventListener('click', function(){
-            console.log('running refresh')
             waitBrach.style.display = "none";
             watchBrach.style.display = "inline";
             timer = setInterval(function(){
                 var refresh_btn = document.querySelector('[data-qa-action-id="refresh-queue"]');
-                refresh_btn.click();
                 if(newQuestion()){
                     let message = {message:{flag:"alert", options:{frequency:state["alert-frequency"], sound: state["sound-select"]}}};
                     console.log('New Question Detected - sending alert to background', message);
@@ -112,17 +107,6 @@ function appendTool(html){
             watchBrach.style.display = "none";
             clearInterval(timer);   
         });
-        document.querySelectorAll('#alert-sounds>*').forEach(function(el,i){
-            el.addEventListener('click', function(e){
-                let next = (e.target.id == "one")? "two" : "one";
-                document.querySelectorAll('#alert-sounds>*').forEach(function(el,i){
-                    el.style.display = 'none';
-                })
-                document.querySelector('#'+next).style.display = 'inline';
-                state["alert-sound"]=document.querySelector('#'+next).innerHTML;
-                saveConfig();
-            })
-        })
         document.querySelectorAll("[optField='true']").forEach(function(el){
             // approximate on('change') which does not appear to work
             function handleChange(e){
