@@ -5,6 +5,7 @@ let time=1000;
 let timer = setInterval(()=>{
     if(started){time++}
 },1000);
+let currSound;
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse)=>{
     console.log(request);
@@ -65,7 +66,9 @@ let alert_manager = {
         console.log('Playing Alert')
         alert = new Audio(chrome.runtime.getURL(`./assets/sounds/${alertFile}.mp3`));
         alert.volume = (1/5)*options["volume"];
-        alert.play();
+        if(currSound){currSound.pause()}
+        currSound = alert;
+        currSound.play();
         started = true;
         time = 0;
     }
