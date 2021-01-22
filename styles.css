@@ -1,6 +1,48 @@
 [contenteditable] {
     outline: 0px solid transparent;
 }
+#volume {
+    margin-left: 1rem;
+    position: relative;
+    height: 25px;
+    width: 50px;
+    float: left;
+    border-radius: 5px;
+}
+#volume>div {
+    border-radius: 15px;
+    width: 3px;
+    position: absolute;
+    display: inline;
+    float: left;
+    background-color: #5FB4D8;
+}
+#volume div:first-child{
+    bottom: 40%;
+    left: 5px;
+    height: 20%;
+}
+#volume div:nth-child(2){
+    bottom: 30%;
+    left: 15px;
+    height: 40%;
+}
+#volume div:nth-child(3){
+    bottom: 20%;
+    left: 25px;
+    height: 60%;
+}
+#volume div:nth-child(4){
+    bottom: 10%;
+    left: 35px;
+    height: 80%;
+}
+#volume div:nth-child(5){
+    bottom: 0%;
+    left: 45px;
+    height: 100%;
+}
+
 #toolbar { 
     padding: 1rem;
     display: inline-block;
@@ -44,9 +86,6 @@
 }
 .ask-opt:hover{
     color: #5fb4d871;
-}
-#two {
-    display: none;
 }
 .option-sentence{
     line-height: 2.6;

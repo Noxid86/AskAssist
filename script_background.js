@@ -38,8 +38,10 @@ let alert_manager = {
         // TERMS:
         // alert-frequency: the number in times per minute given per the user that the alert should maximally go off.
         // alert-interval: the number of seconds that must have passed since the last alert to statisfy the alert-frequency
-        let frequency = parseInt(options['alert-frequency']);
+        let frequency = parseInt(options['frequency']);
         let alertInterval = 60/frequency
+        let sound = options.sound;
+        console.log(`${time} < ${alertInterval}: ${time < alertInterval}`)
         // ensure that the user has not turned off alerts, nor is it too soon, given the current frequency,  to issue another alert
         if(
             options['alert-frequency'] != 0 && 
@@ -51,17 +53,19 @@ let alert_manager = {
         // load the sound file and issue the alert
         let alertFile;
         alert_manager.alertList.forEach(function(alert){
-            if (alert.name==options["sound-select"]){
+            if (alert.name==sound){
                 alertFile = alert.file;
             }
         })
         if(!alertFile){
-            console.log(options["sound-select"], "does not have an associated sound file");
+            console.log(options)
+            console.log(sound, "does not have an associated sound file");
             return false
         }
+        console.log('Playing Alert')
         alert = new Audio(chrome.runtime.getURL(`./assets/sounds/${alertFile}.mp3`));
-        console.log('playing alert', )
-        alert.play() 
+        alert.volume = (1/5)*options["volume"];
+        alert.play();
         started = true;
         time = 0;
     }

@@ -2,6 +2,7 @@ let state = {
     "alert-frequency":1,
     "sound-select":"rick roll",
     "watch-frequency": 5,
+    "volume": 1,
     alertList: [],
     loadState: function(){
         if(JSON.parse(localStorage.getItem('config'))){
@@ -10,25 +11,28 @@ let state = {
             state["sound-select"] = saveData["sound-select"] || "rick roll"
             state["alert-frequency"] = saveData["alert-frequency"] || "1"
             state["watch-frequency"] = saveData["watch-frequency"] || "5"
+            state["volume"] = saveData["volume"] || "1"
         } 
         this.render["sound-select"]();
         this.render.fields();
+        this.render.volume();
     },
     
     set: function(property, value){
         if(property in state){
             console.log('state setting ', property, ' to ', value)
             state[property] = value;
-            console.log("::",state["alert-frequency"])
+            console.log("::",state[property])
             let saveData = {
                 "alert-frequency":state["alert-frequency"],
                 "sound-select":state["sound-select"],
-                "watch-frequency": state["watch-frequency"]
+                "watch-frequency": state["watch-frequency"],
+                "volume": state["volume"]
             }
             console.log('saving settings ', saveData)
             localStorage.setItem('config',JSON.stringify(saveData))
-            console.log(`attempting to render ${property}`)
             if(property=="sound-select"){state.render["sound-select"]()};
+            if(property=="volume"){state.render["volume"]()};
         } 
         else { 
             console.log (`error: ${property} is not a known configuration property`)
@@ -87,6 +91,18 @@ let state = {
                 })
                 alertContainer.append(alertEl);
             })    
+        }, 
+        "volume":function(){
+            console.log('rendering volume')
+            let bars = document.querySelectorAll('#volume div');
+            bars.forEach(function(bar, i){
+                console.log(`i<=state.volume:: ${(i<=state.volume)}`)
+                if(i<state.volume){
+                    bar.style.opacity = 1;
+                } else {
+                    bar.style.opacity = 0.2;
+                }
+            })
         }
     }
 }
@@ -119,13 +135,21 @@ function appendTool(html){
         let watching = document.querySelector('#watching');
         let waitBrach = document.querySelector('#waiting-branch');
         let watchBrach = document.querySelector('#watching-branch');
+        let volume = document.querySelector('#volume');
         waiting.addEventListener('click', function(){
             waitBrach.style.display = "none";
             watchBrach.style.display = "inline";
             timer = setInterval(function(){
                 var refresh_btn = document.querySelector('[data-qa-action-id="refresh-queue"]');
                 if(newQuestion()){
-                    let message = {message:{flag:"alert", options:{frequency:state["alert-frequency"], sound: state["sound-select"]}}};
+                    let message = {
+                        message:{
+                        flag:"alert", options:{
+                            frequency:state["alert-frequency"], 
+                            sound: state["sound-select"], 
+                            volume: state["volume"]
+                        }
+                    }};
                     console.log('New Question Detected - sending alert to background', message);
                     chrome.runtime.sendMessage(message);
                 };
@@ -137,6 +161,13 @@ function appendTool(html){
             watchBrach.style.display = "none";
             clearInterval(timer);   
         });
+        volume.addEventListener('click', function(e){
+            if(state['volume']>=5){
+                state.set('volume', 0);
+            } else {
+                state.set('volume', state['volume']+1);
+            }  
+        })
         document.querySelectorAll("[isoption]").forEach(function(el){
             // approximate on('change') which does not appear to work
             function handleChange(e){
@@ -160,7 +191,7 @@ function newQuestion(){
     if(search!==-1){
         return true;
     } else {
-        return false
+        return true
     } 
 }
 
