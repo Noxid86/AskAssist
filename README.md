@@ -10,7 +10,7 @@ and comes with the following features...
  
 
 ## Installation
-This is an unpacked work in progress.  To install the plugin enable developer mode in the upper right hand corner of `chrome://extensions` and then 'load unpacked' on the left. Once you have selected the AskAssist folder the plugin will be ready to use. 
+This is an unpacked work in progress.  To install the plugin enable developer mode in the upper right hand corner of `chrome://extensions` and then 'load unpacked' on the left. Once you have loaded the AskAssist folder the plugin will be ready to use. 
 
 ## Usage
 ![screenshot 'waiting'](./screenshot-waiting.png)
