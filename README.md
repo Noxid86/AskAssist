@@ -19,12 +19,15 @@ When the user opens the page the automated refresh will be turned off. Clicking 
 ![screenshot 'watching'](./screenshot-watching.png)
 When the script is running its refresh the following options may be adjusted...
 
-**Clickables...**
-watching: toggles the script back off.
-alert: will cycle through available sound files.
-volume: will cycle through volume settings. This button is represented by the 5 vertical bars to the right of the AskAssist logo.
+### Clickables...
+**watching:** toggles the script back off.
 
-**Editables...**
+**alert:** will cycle through available sound files.
+
+**volume**: will cycle through volume settings. This button is represented by the 5 vertical bars to the right of the AskAssist logo.
+
+
+### Editables...
 These options are content editable fields which accept only numbers up to 3 digits.  
 refresh frequency: determines the interval in seconds between refreshes.  
 alert frequency: the maximum number of times per minute an alert will play. 
