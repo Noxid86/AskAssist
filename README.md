@@ -1,4 +1,4 @@
-![AskAssist](./AskAssist.png)
+![screenshot-AskAssist](./AskAssist.png)
 A small chrome plugin for managing a work slack 
 
 # Installation
