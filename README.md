@@ -28,8 +28,10 @@ When the script is running its refresh the following options may be adjusted...
 
 
 ### Editables...
-These options are content editable fields which accept only numbers up to 3 digits.  
+These options are content editable fields which accept only numbers up to 3 digits.
+
 **refresh frequency:** determines the interval in seconds between refreshes.  
+
 **alert frequency:** the maximum number of times per minute an alert will play. 
 
 
