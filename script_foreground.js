@@ -159,7 +159,7 @@ function appendTool(html){
             waitBrach.style.display = "none";
             watchBrach.style.display = "inline";
             timer = setInterval(function(){
-                var refresh_btn = document.querySelector('[data-qa-action-id="refresh-queue"]');
+                let refresh_btn = document.querySelector('[data-qa-action-id="refresh-queue"]');
                 if(newQuestion()){
                     sendAlert();
                 };
