@@ -163,6 +163,7 @@ function appendTool(html){
                 if(newQuestion()){
                     sendAlert();
                 };
+                refresh_btn.click();
             }, state["watch-frequency"]*1000);
             return timer;
         });
