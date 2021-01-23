@@ -4,17 +4,17 @@
 #volume {
     position: relative;
     top: 4px;
-    margin-left: 1rem;
-    height: 25px;
-    width: 50px;
+    margin-left: -1rem;
+    height: 30px;
+    width: 70px;
     float: left;
     border-radius: 5px;
 }
 #volume div{
-    width: 20px;
+    width: 30px;
     background-color:transparent;
     border-radius: 15px;
-    border-left: 3px solid #5FB4D8;
+    border-right: 3px solid #5FB4D8;
     display: inline;
     float: left;
     position: absolute;
