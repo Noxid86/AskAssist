@@ -2,6 +2,7 @@
     outline: 0px solid transparent;
 }
 #volume {
+    cursor: pointer;
     position: relative;
     top: 4px;
     margin-left: -1rem;
@@ -65,6 +66,7 @@
 }
 
 [contenteditable="true"]{
+    cursor: text !important;
     display: inline-block;
     min-width:10px;
     height: 32.5px;
@@ -113,5 +115,37 @@
     display: none;
 }
 
-
+@media only screen and (max-width: 1235px){
+    #toolbar {
+        height: 120px;
+    }
+    #toolbar h1 {
+        margin-bottom:1.5rem;
+    }
+    #toolbar p {
+        line-height: 0rem;
+    }
+}
+@media only screen and (max-width: 650px){
+    #toolbar {
+        height: 140px;
+    }
+    #toolbar h1 {
+        margin-bottom:1.5rem;
+    }
+    #toolbar p {
+        line-height: 0rem;
+    }
+}
+@media only screen and (max-width: 350px){
+    #toolbar {
+        height: 160px;
+    }
+    #toolbar h1 {
+        margin-bottom:1.5rem;
+    }
+    #toolbar p {
+        line-height: 0rem;
+    }
+}
 
