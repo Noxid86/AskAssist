@@ -31,8 +31,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse)=>{
 
 let alert_manager = {
     alertList: [
-        {name:"beep beep", file:'beep'},
-        {name:"softly chirp", file:'chirp'}
+        {name:"!!!!!", file:'metalGear.m4a'},
+        {name:"beep beep", file:'beep.mp3'},
+        {name:"softly chirp", file:'chirp.mp3'}
     ],
     handleAlert: (options)=>{
         // TERMS:
@@ -63,7 +64,7 @@ let alert_manager = {
             return false
         }
         console.log('Playing Alert')
-        alert = new Audio(chrome.runtime.getURL(`./assets/sounds/${alertFile}.mp3`));
+        alert = new Audio(chrome.runtime.getURL(`./assets/sounds/${alertFile}`));
         alert.volume = (1/5)*options["volume"];
         if(currSound){currSound.pause()}
         currSound = alert;
