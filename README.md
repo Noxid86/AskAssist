@@ -34,8 +34,11 @@ These options are content editable fields which accept only numbers up to 3 digi
 
 **alert frequency:** the maximum number of times per minute an alert will play. 
 
-
 ---
+
+## Updating
+If you have been using AskAssist and wish to update to the newest version simply use `git pull` and then reload the package in chrome.  There is a circular arrow in chrome extension management that reloads the package files.  After you have updated the plugin it is a good idea to clear your local storage as I currently have no validation for the settings and old settings on new versions may cause hiccups.
+
 ## Troubleshooting
 Failure to append toolbar:  The plugin waits for the user to visit a "https://app.slack.com/client/TLXH0JYKB/*" url and then appends the toolbar to the page.  On occasion the AskBCS application continues to load after the window's 'load' event has fired and the toolbar may fail to append.  If this happens a simple refresh should fix the issue. 
 
