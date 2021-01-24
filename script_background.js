@@ -31,7 +31,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse)=>{
 
 let alert_manager = {
     alertList: [
-        {name:"rick roll", file:'rick'},
         {name:"beep beep", file:'beep'},
         {name:"softly chirp", file:'chirp'}
     ],
