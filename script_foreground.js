@@ -8,7 +8,7 @@ let state = {
         if(JSON.parse(localStorage.getItem('config'))){
             saveData=JSON.parse(localStorage.getItem('config'))
             console.log('loading::: ', saveData);
-            state["sound-select"] = saveData["sound-select"] || "rick roll"
+            state["sound-select"] = saveData["sound-select"] || "beep beep"
             state["alert-frequency"] = saveData["alert-frequency"] || "1"
             state["watch-frequency"] = saveData["watch-frequency"] || "5"
             state["volume"] = saveData["volume"] || "1"
