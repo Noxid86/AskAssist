@@ -1,6 +1,6 @@
 let state = {
     "alert-frequency":1,
-    "sound-select":"rick roll",
+    "sound-select":"beep beep",
     "watch-frequency": 5,
     "volume": 1,
     alertList: [],
