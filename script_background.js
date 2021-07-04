@@ -33,7 +33,8 @@ let alert_manager = {
     alertList: [
         {name:"!!!!!", file:'metalGear.m4a'},
         {name:"beep beep", file:'beep.mp3'},
-        {name:"softly chirp", file:'chirp.mp3'}
+        {name:"softly chirp", file:'chirp.mp3'},
+        {name:"alert R2", file:'r2d2.mp3'}
     ],
     handleAlert: (options)=>{
         // TERMS:

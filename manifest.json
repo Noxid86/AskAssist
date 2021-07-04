@@ -13,6 +13,7 @@
       "./assets/beep.mp3",
       "./assets/chirp.mp3",
       "./assets/rick.mp3",
+      "./assets/r2d2.mp3",
       "toolbar.html"
     ],
     "content_scripts": [
