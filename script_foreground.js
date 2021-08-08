@@ -198,7 +198,8 @@ function appendTool(html){
 
 function newQuestion(){
     console.log('searching for new question...')
-    let search = document.body.innerHTML.search('<b data-stringify-type="bold">AVAILABLE QUESTIONS</b>');
+    const match = /(AVAILABLE QUESTIONS|IN CLASS ACTIVITY QUESTIONS)/
+    const search = document.body.innerHTML.search(match);
     if(search!==-1){
         return true;
     } else {
