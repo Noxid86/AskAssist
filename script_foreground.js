@@ -154,8 +154,10 @@ function appendTool(html){
         let watching = document.querySelector('#watching');
         let waitBrach = document.querySelector('#waiting-branch');
         let watchBrach = document.querySelector('#watching-branch');
+        let toolbarDiv = document.querySelector('#toolbar');
         let volume = document.querySelector('#volume');
         waiting.addEventListener('click', function(){
+            toolbarDiv.classList = "watching";
             waitBrach.style.display = "none";
             watchBrach.style.display = "inline";
             timer = setInterval(function(){
@@ -168,6 +170,7 @@ function appendTool(html){
             return timer;
         });
         watching.addEventListener('click', function(){
+            toolbarDiv.classList = "waiting";
             waitBrach.style.display = "inline";
             watchBrach.style.display = "none";
             clearInterval(timer);   

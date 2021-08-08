@@ -15,10 +15,15 @@
     width: 30px;
     background-color:transparent;
     border-radius: 15px;
-    border-right: 3px solid #5FB4D8;
     display: inline;
     float: left;
     position: absolute;
+}
+#toolbar.waiting>#volume div{
+    border-right: 3px solid rgb(220, 89, 96);
+}
+#toolbar.watching>#volume div{
+    border-right: 3px solid #5FB4D8;
 }
 
 #volume div:first-child{
@@ -63,6 +68,12 @@
     color:#5FB4D8;
     font-style: italic;
     font-weight: bold;
+}
+#toolbar.watching>h1>span{
+    color:#5FB4D8;
+}
+#toolbar.waiting>h1>span{
+    color: rgb(220, 89, 96);
 }
 
 [contenteditable="true"]{
