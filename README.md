@@ -13,6 +13,8 @@ and comes with the following features...
 This is an unpacked work in progress.  To install the plugin enable developer mode in the upper right hand corner of `chrome://extensions` and then 'load unpacked' on the left. Once you have loaded the AskAssist folder the plugin will be ready to use. 
 
 ## Usage
+**Remember**: AskAssist can only check for new questions while you have the page queue loaded in your browser.
+
 ![screenshot 'waiting'](./screenshot-waiting.png)
 When the user opens the page the automated refresh will be turned off. Clicking the word "waiting" on the right will begin the script and reveal the options.
 
