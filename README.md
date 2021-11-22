@@ -43,12 +43,10 @@ If you have been using AskAssist and wish to update to the newest version simply
 
 ## Troubleshooting
 **AskAssist is not appearing on the page**
-
 Ensure that you have the most current version of AskAssist by following the Update instructions above.
 
-**I get an alert message 'AskAssist cannot append to .p-workspace__primary_view_contents; element not found. Please poke Jeremy Dixon if you dont know why :) '**
-
-Previously, the script would sometimes fail to append to the page due to our slack bot loading after the slack page itself finishes the 'load' event.  In the past, this would occasionally cause the append to fail and require a refresh. I have updated the script to now search for that element recursively every 2 seconds until it loads OR until it fails to find the element after 40 seconds of searching.  
+**I get an alert message 'AskAssist cannot append to .p-workspace__primary_view_contents; element not found.'**
+Previously, the script would sometimes fail to append to the page due to our slack bot loading after the slack page itself finishes the 'load' event.  In the past, this would occasionally cause the append to fail and require a refresh. I have updated the script to now search for that element recursively every 2 seconds until it loads OR until it fails to find the element after 40 seconds of searching. If you are getting this message it means that your AskAssist has been updated to include this change, yet is still unable to find the toolbar.  I have yet to see this happen, however, if you are getting this, please send me a slack message so that I can get to the bottom of it :) 
 
 
 
