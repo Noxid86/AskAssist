@@ -42,5 +42,13 @@ These options are content editable fields which accept only numbers up to 3 digi
 If you have been using AskAssist and wish to update to the newest version simply use `git pull` and then reload the package in chrome.  There is a circular arrow in chrome extension management that reloads the package files.  After you have updated the plugin it is a good idea to clear your local storage as I currently have no validation for the settings and old settings on new versions may cause hiccups.
 
 ## Troubleshooting
-Failure to append toolbar:  The plugin waits for the user to visit a "https://app.slack.com/client/TLXH0JYKB/*" url and then appends the toolbar to the page.  On occasion the AskBCS application continues to load after the window's 'load' event has fired and the toolbar may fail to append.  If this happens a simple refresh should fix the issue. 
+**AskAssist is not appearing on the page**
+
+Ensure that you have the most current version of AskAssist by following the Update instructions above.
+
+**I get an alert message 'AskAssist cannot append to .p-workspace__primary_view_contents; element not found. Please poke Jeremy Dixon if you dont know why :) '**
+
+Previously, the script would sometimes fail to append to the page due to our slack bot loading after the slack page itself finishes the 'load' event.  In the past, this would occasionally cause the append to fail and require a refresh. I have updated the script to now search for that element recursively every 2 seconds until it loads OR until it fails to find the element after 40 seconds of searching.  
+
+
 

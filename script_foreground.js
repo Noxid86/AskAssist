@@ -1,3 +1,4 @@
+// State Object for tracking user settings in local storage
 let state = {
     "alert-frequency": 1,
     "sound-select": "beep beep",
@@ -204,6 +205,7 @@ function appendTool(html) {
         });
 };
 
+// Returns TRUE if 'AVAILABLE QUESTIONS' or 'IN CLASS ACTIVITY QUESTIONS' are found in the HTML
 function newQuestion() {
     console.log('searching for new question...')
     const match = /(AVAILABLE QUESTIONS|IN CLASS ACTIVITY QUESTIONS)/
@@ -215,7 +217,7 @@ function newQuestion() {
     }
 }
 
-
+// Workaround for components not loading until after the 'load' event completes
 window.addEventListener('load', function () {
     console.log('looking for workspace')
     let attempts = 0;
