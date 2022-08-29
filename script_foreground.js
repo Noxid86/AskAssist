@@ -34,6 +34,7 @@ let state = {
             localStorage.setItem('config', JSON.stringify(saveData))
             if (property == "sound-select") {
                 state.render["sound-select"]();
+                console.log('sending alert')
                 sendAlert("skip frequency");
             };
             if (property == "volume") { state.render["volume"]() };
@@ -112,6 +113,7 @@ let state = {
 }
 
 function sendAlert(skipFrequency) {
+    console.log('sending alert')
     let message = {
         message: {
             flag: "alert", options: {
@@ -172,6 +174,7 @@ function appendTool(html) {
                         sendAlert();
                     };
                     refresh_btn.click();
+                    console.log('refreshed')
                 }, state["watch-frequency"] * 1000);
                 return timer;
             });

@@ -1,27 +1,27 @@
 {
-    "name": "AskAssist",
-    "version": "1.0",
-    "description": "",
-    "icons": { 
-      "16": "./assets/icons/icon16.png",
-      "48": "./assets/icons/icon48.png",
-      "128": "./assets/icons/icon128.png" },
-    "background": {
-      "scripts": ["script_background.js"]
-    },
-    "web_accessible_resources": [
-      "./assets/beep.mp3",
-      "./assets/chirp.mp3",
-      "./assets/rick.mp3",
-      "./assets/r2d2.mp3",
-      "toolbar.html"
-    ],
-    "content_scripts": [
-        {
-          "matches": ["https://app.slack.com/client/TLXH0JYKB/*"],
-          "js": ["script_foreground.js"], 
-          "css": ["styles.css"]
-        }
+  "name": "AskAssist",
+  "version": "1.0",
+  "description": "",
+  "icons": {
+    "16": "./assets/icons/icon16.png",
+    "48": "./assets/icons/icon48.png",
+    "128": "./assets/icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "script_background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://app.slack.com/client/TLXH0JYKB/*"
       ],
-    "manifest_version": 2
+      "js": [
+        "script_foreground.js"
+      ],
+      "css": [
+        "styles.css"
+      ]
+    }
+  ],
+  "manifest_version": 3
 }

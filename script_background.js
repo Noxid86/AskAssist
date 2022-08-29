@@ -4,8 +4,31 @@ let started = false;
 let time=1000;
 let timer = setInterval(()=>{
     if(started){time++}
+    console.log('background yo!')
 },1000);
 let currSound;
+
+
+// Function to replace old functionality when upgrading to manifest v3
+function playSound(sound, volume) {
+    console.log('lets play a sound at volume:', (1/5)*volume)
+    let url = chrome.runtime.getURL('./components/audio.html');
+    // set this string dynamically in your code, this is just an example
+    // this will play success.wav at half the volume and close the popup after a second
+    url += `?volume=${(1/5)*volume}&src=${sound}&length=1000`;
+
+    chrome.windows.create({
+        type: 'popup',
+        focused: false,
+        top: 20,
+        left: 20,
+        height: 20,
+        width: 20,
+        url,
+    })
+
+}
+
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse)=>{
     console.log(request);
@@ -24,6 +47,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse)=>{
             handleGet(request, sender, sendResponse);
             break;
         default:
+            console.log('unknown alert')
             break;
     } 
     return true  
@@ -64,12 +88,7 @@ let alert_manager = {
             console.log(sound, "does not have an associated sound file");
             return false
         }
-        console.log('Playing Alert')
-        alert = new Audio(chrome.runtime.getURL(`./assets/sounds/${alertFile}`));
-        alert.volume = (1/5)*options["volume"];
-        if(currSound){currSound.pause()}
-        currSound = alert;
-        currSound.play();
+        playSound(alertFile, options.volume);
         started = true;
         time = 0;
     }
